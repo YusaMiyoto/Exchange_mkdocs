@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Queries - Commodity exchange</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Queries";
+    var mkdocs_page_input_path = "queries\\queries.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Commodity exchange</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <p class="caption"><span class="caption-text">Tables</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/office.html">office</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/broker.html">broker</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/batch.html">batch</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/buyer.html">buyer</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/contract.html">contract</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/deal.html">deal</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/firm.html">firm</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/product.html">product</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/productbatch.html">product batch</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/productfirm.html">product firm</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../tables/payment.html">payment</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Code</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../code/create.html">create</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../code/insert.html">insert</a>
+                    </li>
+                </ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="queries.html">Queries</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#1">1) Выдать количество пакетов молока в партии для каждой партии с условием предоплаты</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2">2) Выдать стоимость всех продуктов для сделок по датам</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3">3) Выдать все продукты с их типами</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-3-04042021">4) Выдать всех брокеров из Конторы3, которые участвовали в сделках 04/04/2021</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5">5) Выдать покупателей для каждой сделки</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6">6) Выдать названия всех покупателей и производителей</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7">7) Выдать название фирмы, производящей сыр</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8">8) Выдать номера партий, где в условии есть подстрока "Пред"</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#9">9) Выдать, в каком месяца был заключён каждый из договоров</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#10">10) Выдать среднюю стоимость товаров для каждой партии</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#11">11) Вывести дату сделки, заключенной с участием покупателя "Биржа" и без участия брокера "Петров К. Г."</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#12-">12) Выдать продукты, цена которых в партиях больше минимальной цены, которая когда-либо была</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#13">13) Выдать названия продуктов, тип которых совпадает со специализацией организации</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#14">14) Выдать количество товаров и номер партии для товаров, количество которых &gt;= максимальному</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">PHP</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../php/interfaces/interfaces.html">interfaces</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../php/queries/queries.html">queries</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">MongoDB</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../mongodb/model.html">new model</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../mongodb/insert.html">create and insert</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../mongodb/queries.html">queries</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Commodity exchange</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Queries</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="queries">Queries</h1>
+<h4 id="1">1) Выдать количество пакетов молока в партии для каждой партии с условием предоплаты</h4>
+<pre><code>select product.product_name, product_batch.product_quantity, batch.delivery_conditions
+from product inner join (product_batch inner join batch on
+product_batch.batch_id=batch.id_batch) on
+product.id_product = product_batch.product_id
+where product.product_name='Молоко' and
+batch.delivery_conditions='Предоплата';
+</code></pre>
+<p><img alt="q1" src="1.jpg" title="Запрос1" /></p>
+<h4 id="2">2) Выдать стоимость всех продуктов для сделок по датам</h4>
+<pre><code>SELECT deal.deal_date, sum(product_batch.product_price*product_batch.product_quantity) as AllProductCost
+FROM deal natural join product_batch group by deal.deal_date;
+</code></pre>
+<p><img alt="q2" src="2.jpg" title="Запрос2" /></p>
+<h4 id="3">3) Выдать все продукты с их типами</h4>
+<pre><code>select product.product_name, product_firm.product_type from
+product left join product_firm on product.id_product=product_firm.product_id;
+</code></pre>
+<p><img alt="q3" src="3.jpg" title="Запрос3" /></p>
+<h4 id="4-3-04042021">4) Выдать всех брокеров из Конторы3, которые участвовали в сделках 04/04/2021</h4>
+<pre><code>select broker.fio, office.office_name from deal inner join
+(broker inner join office on broker.office_id=office.id_office) ON
+deal.broker_id=broker.id_broker where deal.deal_date='2021-04-04' and
+office.office_name='Контора3';
+</code></pre>
+<p><img alt="q4" src="4.jpg" title="Запрос4" /></p>
+<h4 id="5">5) Выдать покупателей для каждой сделки</h4>
+<pre><code>SELECT buyer.buyer_name, contract.contract_date from contract inner join
+(deal inner join buyer ON buyer.id_buyer=deal.buyer_id) ON
+deal.contract_id=contract.id_contract;
+</code></pre>
+<p><img alt="q5" src="5.jpg" title="Запрос5" /></p>
+<h4 id="6">6) Выдать названия всех покупателей и производителей</h4>
+<pre><code>select firm_name as res from firm UNION
+SELECT buyer_name as res FROM buyer
+order by res;
+</code></pre>
+<p><img alt="q6" src="6.jpg" title="Запрос6" /></p>
+<h4 id="7">7) Выдать название фирмы, производящей сыр</h4>
+<pre><code>SELECT firm_name FROM firm where id_firm IN
+(select firm_id from product_firm where product_id IN
+(select id_product from product where product_name='Сыр'));
+</code></pre>
+<p><img alt="q7" src="7.jpg" title="Запрос7" /></p>
+<h4 id="8">8) Выдать номера партий, где в условии есть подстрока "Пред"</h4>
+<pre><code>SELECT id_batch FROM batch where (substring(delivery_conditions,1,4)='Пред');
+</code></pre>
+<p><img alt="q8" src="8.jpg" title="Запрос8" /></p>
+<h4 id="9">9) Выдать, в каком месяца был заключён каждый из договоров</h4>
+<pre><code>SELECT id_contract, date_part('month',contract_date) as month_number FROM contract;
+</code></pre>
+<p><img alt="q9" src="9.jpg" title="Запрос9" /></p>
+<h4 id="10">10) Выдать среднюю стоимость товаров для каждой партии</h4>
+<pre><code>SELECT batch_id, avg(product_price) FROM product_batch group by batch_id order by batch_id asc;
+</code></pre>
+<p><img alt="q10" src="10.jpg" title="Запрос10" /></p>
+<h4 id="11">11) Вывести дату сделки, заключенной с участием покупателя "Биржа" и без участия брокера "Петров К. Г."</h4>
+<pre><code>SELECT buyer_id, broker_id, deal_date FROM deal where buyer_id in
+(select DISTINCT id_buyer from buyer where buyer_name='Биржа')
+except select buyer_id, broker_id, deal_date FROM deal where broker_id NOT IN
+(select id_broker from broker where fio='Петров К. Г.');
+</code></pre>
+<p><img alt="q11" src="11.jpg" title="Запрос11" /></p>
+<h4 id="12-">12) Выдать продукты, цена которых в партиях больше минимальной цены, которая когда-либо была</h4>
+<pre><code>SELECT product_name, product_price FROM product inner join product_batch on id_product=product_id
+where product_price &gt; any(select product_price from product_batch);
+</code></pre>
+<p><img alt="q12" src="12.jpg" title="Запрос12" /></p>
+<h4 id="13">13) Выдать названия продуктов, тип которых совпадает со специализацией организации</h4>
+<pre><code>SELECT product_name FROM product inner join (product_firm inner join firm on id_firm=firm_id)
+product_firm on id_product=product_id
+where product_type In (select speciallization from firm);
+</code></pre>
+<p><img alt="q13" src="13.jpg" title="Запрос13" /></p>
+<h4 id="14">14) Выдать количество товаров и номер партии для товаров, количество которых &gt;= максимальному</h4>
+<pre><code>SELECT batch_id, product_quantity FROM product_batch where
+product_quantity &gt;= all(select product_quantity from product_batch);
+</code></pre>
+<p><img alt="q14" src="14.jpg" title="Запрос14" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../php/interfaces/interfaces.html" class="btn btn-neutral float-right" title="interfaces">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../code/insert.html" class="btn btn-neutral" title="insert"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../code/insert.html" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../php/interfaces/interfaces.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
